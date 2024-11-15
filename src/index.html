@@ -37,12 +37,16 @@
       <button class="btn btn-primary chartBtn" disabled>
         <i class="bi bi-bar-chart-fill text-danger"></i> график
       </button>
-      <!-- Кнопка сброса результато -->
+      <!-- Кнопка по клиенту -->
+      <button class="btn btn-primary clientBtn">
+        <i class="bi bi-person-square text-indigo"></i> клиент
+      </button>
+      <!-- Кнопка сброса результатов -->
       <div class="col-auto">
-        <button class="btn btn-primary reset">
+        <button class="btn btn-primary resetBtn">
           <i class="bi bi-arrow-clockwise"></i> рестарт
         </button>
-      </div>     
+      </div>
       <!-- тип графика  -->
       <select class="form-select chartType" aria-label="Default select example">
         <option selected value="">Выберите тип графика:</option>
@@ -90,7 +94,7 @@
       <div class="col-auto text-center m-2">
         <button
           type="submit"
-          class="btn btn-primary questions-finish bg-success text-light border-0"
+          class="btn btn-primary bg-success text-light border-0 finishBtn"
         >
           <i class="bi bi-flag-fill"></i>
           завершить
@@ -99,7 +103,8 @@
           </div>
         </button>
       </div>
-      
-    </section>
+    </section>    
   </body>
 </html>
+
+

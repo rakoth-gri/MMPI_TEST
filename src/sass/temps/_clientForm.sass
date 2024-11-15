@@ -1,0 +1,42 @@
+.clientForm
+    width: 50%
+    margin: 5rem auto
+    font-family: 'Roboto'
+    color: var(--bs-light)
+    text-align: center
+   
+
+    &-body
+        padding: 0.5rem
+        position: relative
+
+
+    &-input
+        background-color: transparent
+        color: inherit
+        flex-grow: 1
+        border: none
+        padding: 0.5rem
+        border: none
+        cursor: pointer
+        outline-color: var(--bs-primary)
+
+        &:focus, &:active
+            background-color: transparent
+            border: none
+
+        &::placeholder
+            text-transform: uppercase
+            opacity: 0.6
+
+        &[type='submit']
+            background-color: var(--bs-primary)
+            border-radius: 0.5rem !important
+            width: 100%
+         
+
+
+
+.input-group-text
+    background-color: transparent
+    color: inherit   

@@ -88,8 +88,10 @@ class Questions {
       alert("Вы ответили не на все вопросы!!");
       return;
     }
-    this.state.calcRawPoints();
-    this.state.$finishBtn.disabled = true;
+    this.state.calcRawPoints();   
+    [this.state.$finishBtn, this.state.$clientBtn].forEach(
+      (btn) => (btn.disabled = true)
+    );
     [this.state.$alert, this.state.$spinner].forEach((el) =>
       toggler(el, "visible")
     );
@@ -99,7 +101,7 @@ class Questions {
         toggler(el, "visible")
       );
       [this.state.$tableBtn, this.state.$chartBtn].forEach(
-        (el) => (el.disabled = false)
+        (btn) => (btn.disabled = false)
       );
     }, 1400);
   };

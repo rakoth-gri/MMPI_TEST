@@ -1,10 +1,12 @@
-import { questions } from "./data.js";
+import { questions, clientFormElems } from "./data.js";
 import { addRawPointsToScales } from "./addRawPointsToScales.js";
 import { drawResultTable } from "./drawResultTable.js";
 import { drawResultChart } from "./drawResultChart.js";
 import { drawAlertWindow } from "./drawAlertWindow.js";
 import { toggler, convertToTPoints } from "./utils.js";
 import { MMPI_INDEXIS } from "./mmpi_indexes.js";
+// класс
+import ClientForm from "./ClientForm.js";
 
 const state = {
   // ! DOM_ELEMENTS -------------------------------------------
@@ -14,10 +16,11 @@ const state = {
   // кнопки действий -------
   $prevBtn: document.querySelector(`#prev`),
   $nextBtn: document.querySelector(`#next`),
-  $resetBtn: document.querySelector(".reset"),
+  $resetBtn: document.querySelector(".resetBtn"),
   $tableBtn: document.querySelector(".tableBtn"),
   $chartBtn: document.querySelector(".chartBtn"),
-  $finishBtn: document.querySelector(`.questions-finish`),
+  $finishBtn: document.querySelector(`.finishBtn`),
+  $clientBtn: document.querySelector(`.clientBtn`),
   // селекты ---------------
   $sex: document.querySelector(`.form-select.sex`),
   $chartType: document.querySelector(`.form-select.chartType`),
@@ -31,6 +34,7 @@ const state = {
   limit: 1,
   page: 1,
   subscribers: [],
+  client: null,
   answers: {},
   scales: {
     L: {
@@ -171,14 +175,16 @@ const state = {
     }
     this.answers = {};
     this.sex = null;
+    this.client = null;
     this.$finishBtn.classList.remove("visible");
-    this.$finishBtn.disabled = false;
+    [this.$finishBtn, this.$clientBtn].forEach((btn) => (btn.disabled = false));
     [this.$tableBtn, this.$chartBtn].forEach((btn) => (btn.disabled = true));
     [this.$sex, this.$chartType].forEach((select) => (select.value = ""));
     this.showStartProgress();
     this.subscribers.forEach((cb) =>
       cb(this.getPaginatedData(this.questions, this.limit, this.page))
     );
+    new ClientForm({ el: this.$modal, list: clientFormElems, state: this });
     console.log(this);
   },
   calcRawPoints() {
@@ -206,10 +212,8 @@ const state = {
       const X = this.scales[scale].X;
       const S = MMPI_INDEXIS[scale][this.sex].S;
       const M = MMPI_INDEXIS[scale][this.sex].M;
-
       this.scales[scale].T = convertToTPoints(X, S, M);
     }
-
     console.log(this.scales);
   },
   showStartProgress() {
@@ -234,7 +238,7 @@ const state = {
   },
   addListenerToTableBtn() {
     this.$tableBtn.onclick = () => {
-      drawResultTable(this.$modal, this.scales, this.sex);
+      drawResultTable(this.$modal, this.scales, this.sex, this.client);
       toggler(this.$modal, "visible");
     };
     return this;
@@ -242,6 +246,13 @@ const state = {
   addListenerToChartBtn() {
     this.$chartBtn.onclick = () => {
       drawResultChart(this.$modal, this.scales, this.chartType);
+      toggler(this.$modal, "visible");
+    };
+    return this;
+  },
+  addListenerToclientBtn() {
+    this.$clientBtn.onclick = () => {
+      new ClientForm({ el: this.$modal, list: clientFormElems, state: this });
       toggler(this.$modal, "visible");
     };
     return this;
@@ -265,8 +276,12 @@ state
   .addListenerToResetBtn()
   .addListenerToTableBtn()
   .addListenerToChartBtn()
+  .addListenerToclientBtn()
   .addListenerToSexSelect()
   .addListenerToChartTypeSelect()
   .addListenerToModal();
+
+// рендерим форму в модальное окно с динамическим контентом при первом запуске:
+new ClientForm({ el: state.$modal, list: clientFormElems, state });
 
 export { state };

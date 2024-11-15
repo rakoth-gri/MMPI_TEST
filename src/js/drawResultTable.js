@@ -1,8 +1,19 @@
-function drawResultTable(container, scales, sex) {
+function drawResultTable(container, scales, sex, client) {
   const table = `
             <p class='h4 text-uppercase m-3 text-center'> ${
               sex === "woman" ? "женщина" : "мужчина"
             } </p>
+            ${
+              client
+                ? `<ul class="list-group">
+                  <li class="list-group-item active" aria-current="true">Клиент: </li>
+                  <li class="list-group-item"> <strong> имя: </strong> ${client.name} </li>
+                  <li class="list-group-item"><strong> фамилия: </strong> ${client.surname}</li>
+                  <li class="list-group-item"><strong> дата рождения: </strong> ${client.birthDate}</li>
+                  <li class="list-group-item"><strong> дата рождения: </strong> ${client.email}</li>                  
+                </ul>`
+                : ""
+            }
             <table class="table table-dark table-hover text-center w-auto rounded-2">
                 <thead>
                     <tr>

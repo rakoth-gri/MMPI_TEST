@@ -11,14 +11,20 @@ body
     position: relative
 
 ul  
-    list-style-type: none    
+    list-style-type: none 
+
+input
+    font-family: inherit
+    letter-spacing: 0.7px
+    color: inherit       
 
 
 // Стилизация базовых классов -----------
 
 .btn
     text-transform: uppercase
-    letter-spacing: inherit 
+    letter-spacing: inherit
+    font-family: 'Roboto'
 
     &:disabled
         opacity: 0.4  
@@ -28,10 +34,29 @@ ul
     justify-content: space-between
     align-items: center
     
-.reset
+.resetBtn
     background-color: var(--bs-danger)
     color: whitesmoke
-    border: none      
+    border: none 
+
+
+.finishBtn  
+    display: none
+    align-items: center
+    gap: 0.5rem
+    margin: auto    
+
+    &.visible
+        display: flex           
+
+    &:hover
+        background-color: var(--bs-primary) !important  
+
+.personBtn
+
+    i
+        font-weight: bold 
+        color: var(--bs-gray-700)           
 
 .modal
     position: fixed

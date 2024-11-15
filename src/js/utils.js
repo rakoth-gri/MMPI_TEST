@@ -12,10 +12,13 @@ const toggler = (el, cls) => el.classList.toggle(cls);
 
 const convertToTPoints = (X, S, M) => (50 + (10 * (X - M)) / S).toFixed(2);
 
+const getInitialFormData = (l) => l.slice(0, -1).reduce((acc, { name }) => ({ ...acc, [name]: "" }), {});
+
 export {
   markActiveElement,
   getCurrProgress,
   fillInScale,
   toggler,
   convertToTPoints,
+  getInitialFormData
 };
