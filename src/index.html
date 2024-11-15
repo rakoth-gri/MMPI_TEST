@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.min.css" />
+    <link rel="icon" href="./img/journal-medical.svg" type="image/svg+xml" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/index.js" defer type="module"></script>
+    <title>PSY-ANALYZE</title>
+  </head>
+  <body>
+    <!-- Модальное окно c динамическим контентом  -->
+    <section class="modal"><!-- DYNAMIC RENDER --></section>
+
+    <!-- ALERT  -->
+    <div class="alert alert-info bg-primary text-light" role="alert">
+      спасибо! ваши ответы приняты!
+    </div>
+
+    <!--Контрольная панель  -->
+    <section
+      aria-label="pagination-bar"
+      class="controlPanel flex-wrap m-2 mb-4 gap-3"
+    >
+      <!-- Выбор пола  -->
+      <select class="form-select sex" aria-label="Default select example">
+        <option selected value="">укажите ваш пол:</option>
+        <option value="man">мужчина</option>
+        <option value="woman">женщина</option>
+      </select>
+      <!-- показ таблицы результатов -->
+      <button class="btn btn-primary tableBtn" disabled>
+        <i class="bi bi-table text-warning"></i> таблица
+      </button>
+      <!-- показ графиков результатов -->
+      <button class="btn btn-primary chartBtn" disabled>
+        <i class="bi bi-bar-chart-fill text-danger"></i> график
+      </button>
+      <!-- Кнопка сброса результато -->
+      <div class="col-auto">
+        <button class="btn btn-primary reset">
+          <i class="bi bi-arrow-clockwise"></i> рестарт
+        </button>
+      </div>     
+      <!-- тип графика  -->
+      <select class="form-select chartType" aria-label="Default select example">
+        <option selected value="">Выберите тип графика:</option>
+        <option value="line">Линейный</option>
+        <option value="doughnut">Круговая диаграмма</option>
+        <option value="bar">Гистограмма</option>
+        <option value="polarArea">Полярная область</option>
+        <option value="radar">"радарная" диаграмма</option>
+        <option value="scatter">диаграмма "разброса"</option>
+      </select>
+    </section>
+
+    <!-- Прогресс панель  -->
+    <section
+      role="progressbar"
+      aria-valuenow="100"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      class="d-flex gap-3 align-items-center progress-wrapper"
+    >
+      <progress
+        class="progress-bar"
+        value="0"
+        max="100"
+        aria-label="Количество данных ответов..."
+      ></progress>
+      <output role="progress value" class="progress-value text-center"></output>
+    </section>
+
+    <!-- Questions -->
+    <section class="container-fluid my-4 p-3 questions">
+      <div class="arrow-container rounded-5 rounded-end">
+        <button class="btn border-0" id="prev" disabled>
+          <i class="bi bi-arrow-left-circle"></i>
+        </button>
+      </div>
+
+      <div class="questions-body"><!-- DYNAMIC RENDER --></div>
+      <div class="arrow-container rounded-5 rounded-start">
+        <button class="btn border-0" id="next">
+          <i class="bi bi-arrow-right-circle"></i>
+        </button>
+      </div>
+      <!-- Loading button -->
+      <div class="col-auto text-center m-2">
+        <button
+          type="submit"
+          class="btn btn-primary questions-finish bg-success text-light border-0"
+        >
+          <i class="bi bi-flag-fill"></i>
+          завершить
+          <div class="spinner-border text-danger spinner" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+      </div>
+      
+    </section>
+  </body>
+</html>

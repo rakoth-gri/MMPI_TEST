@@ -1,0 +1,29 @@
+.arrow-container
+    display: flex
+    width: 7%
+    align-items: center
+    justify-content: center    
+
+    // &:hover
+    //     border: 4px solid var(--bs-primary)
+    
+#prev, #next
+    font-size: inherit
+    color: var(--bs-light)
+    letter-spacing: 1px
+    display: flex
+    align-items: center
+    gap: 0.5rem
+    font-size: 2.5em
+
+    &:disabled
+        opacity: 0.35
+
+    &:hover
+        z-index: 2
+        color: var(--bs-danger)    
+
+@media (prefers-reduced-motion: reduce) 
+    #previous, #next
+        transition: none      
+    

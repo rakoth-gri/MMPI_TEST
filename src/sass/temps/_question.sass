@@ -1,0 +1,57 @@
+.questions
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    
+
+    &-body
+        width: 80%
+    
+    &-finish  
+        display: none
+        align-items: center
+        gap: 0.5rem
+        margin: auto         
+
+        &.visible
+            display: flex           
+
+        &:hover
+            background-color: var(--bs-primary) !important                 
+    
+.question
+    font-family: 'Roboto'
+    font-weight: 400
+
+.header-4
+    color: var(--bs-danger)   
+
+.form
+    
+    &-check
+        padding: 0.5rem
+        transition: background-color 0.3s linear, opacity 0.3s linear        
+
+        &:hover
+            background-color: var(--bs-success)
+            opacity: 0.35
+            
+    
+        &-input
+            width: 1.2em
+            height: 1.2em
+            margin-left: 0px !important   
+            float: none !important   
+            margin-right: 0.5rem
+
+        &-label
+            width: 100%
+            cursor: pointer            
+            
+            &.active
+                color: var(--bs-info)
+                font-weight: 700
+
+            
+
+
