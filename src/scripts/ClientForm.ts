@@ -1,7 +1,7 @@
 import { toggler, getInitialFormData } from "./utils.js";
 // типы
-import { T_State } from "./state";
-import { T_CLIENT_FORM_ELEM, I_Client } from "../types/types";
+import { T_State } from "./state.js";
+import { T_CLIENT_FORM_ELEM, I_Client } from "../types/types.js";
 
 class ClientForm {
   $container: HTMLDivElement;
@@ -27,6 +27,7 @@ class ClientForm {
     this.list = list;
     this.state = state;
     this.builder(this.$container, this.list);
+    console.log(this.state.client);
   }
 
   builder(container: HTMLDivElement, list: T_CLIENT_FORM_ELEM[]) {

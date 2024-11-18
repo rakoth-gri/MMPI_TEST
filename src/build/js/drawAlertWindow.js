@@ -1,3 +1,0 @@
-export function drawAlertWindow(container) {
-    container.innerHTML = "\n    <div\n        class=\"modal_warning-body bg-primary rounded-2 position-relative p-3\"\n      >\n        <h3 class=\"modal_warning-header\">\n          <i class=\"bi bi-exclamation-triangle-fill text-warning\"></i> \u0412\u043D\u0438\u043C\u0430\u043D\u0438\u0435!\n        </h3>\n        <p>\n          <strong>\n            \u0414\u043B\u044F \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0430 \u043D\u0430 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0432\u043E\u043F\u0440\u043E\u0441, \u0434\u0430\u0439\u0442\u0435 \u043E\u0442\u0432\u0435\u0442 \u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0438\u0439.\n          </strong>\n        </p>\n      </div>\n    ";
-}

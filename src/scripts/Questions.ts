@@ -1,6 +1,6 @@
 import { markActiveElement, getCurrProgress, toggler } from "./utils.js";
 // types
-import { T_State } from "./state";
+import { T_State } from "./state.js";
 
 class Questions {
   $container: HTMLDivElement;

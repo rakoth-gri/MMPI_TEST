@@ -1,6 +1,6 @@
 import { fillInScale } from "./utils.js";
 // типы
-import { T_SCALES_OBJ } from "../types/types";
+import { T_SCALES_OBJ } from "../types/types.js";
 
 const yes = "yes";
 const no = "no";
