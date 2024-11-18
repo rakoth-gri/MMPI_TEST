@@ -1,4 +1,6 @@
-const MMPI_INDEXIS = {
+import { T_SCALES_NAMES, MMPI_INDEXES_VAL } from "../types/types";
+
+const MMPI_INDEXIS: Record<T_SCALES_NAMES, MMPI_INDEXES_VAL>  = {
   L: {
     woman: {
       S: 2.9,

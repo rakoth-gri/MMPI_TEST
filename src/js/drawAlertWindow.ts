@@ -1,4 +1,4 @@
-export function drawAlertWindow(container) {
+export function drawAlertWindow(container: HTMLDivElement) {
   container.innerHTML = `
     <div
         class="modal_warning-body bg-primary rounded-2 position-relative p-3"

@@ -7,130 +7,140 @@ import { toggler, convertToTPoints } from "./utils.js";
 import { MMPI_INDEXIS } from "./mmpi_indexes.js";
 // класс
 import ClientForm from "./ClientForm.js";
+// типы
+import {
+  T_SCALES_NAMES,
+  T_SCALES_VAL,  
+  T_SCALES_OBJ
+} from "../types/types.js";
 
 const state = {
   // ! DOM_ELEMENTS -------------------------------------------
-  $progress: document.querySelector(`.progress-bar`),
-  $progressValue: document.querySelector(`.progress-value`),
+  $progress: document.querySelector(`.progress-bar`) as HTMLProgressElement,
+  $progressValue: document.querySelector(
+    `.progress-value`
+  ) as HTMLOutputElement,
   $spinner: document.querySelector(`.spinner`),
   // кнопки действий -------
-  $prevBtn: document.querySelector(`#prev`),
-  $nextBtn: document.querySelector(`#next`),
-  $resetBtn: document.querySelector(".resetBtn"),
-  $tableBtn: document.querySelector(".tableBtn"),
-  $chartBtn: document.querySelector(".chartBtn"),
-  $finishBtn: document.querySelector(`.finishBtn`),
-  $clientBtn: document.querySelector(`.clientBtn`),
+  $prevBtn: document.querySelector(`#prev`) as HTMLButtonElement,
+  $nextBtn: document.querySelector(`#next`) as HTMLButtonElement,
+  $resetBtn: document.querySelector(".resetBtn") as HTMLButtonElement,
+  $tableBtn: document.querySelector(".tableBtn") as HTMLButtonElement,
+  $chartBtn: document.querySelector(".chartBtn") as HTMLButtonElement,
+  $finishBtn: document.querySelector(`.finishBtn`) as HTMLButtonElement,
+  $clientBtn: document.querySelector(`.clientBtn`) as HTMLButtonElement,
   // селекты ---------------
-  $sex: document.querySelector(`.form-select.sex`),
-  $chartType: document.querySelector(`.form-select.chartType`),
+  $sex: document.querySelector(`.form-select.sex`) as HTMLSelectElement,
+  $chartType: document.querySelector(
+    `.form-select.chartType`
+  ) as HTMLSelectElement,
   // модальные окна
-  $alert: document.querySelector(`.alert`),
-  $modal: document.querySelector(`.modal`),
+  $alert: document.querySelector(`.alert`) as HTMLDivElement,
+  $modal: document.querySelector(`.modal`) as HTMLDivElement,
   // ! PROPERTIES -------------------------------------------------
   questions,
-  sex: null,
+  sex: "",
   chartType: "",
   limit: 1,
   page: 1,
-  subscribers: [],
+  subscribers: [] as Array<Function>,
   client: null,
-  answers: {},
+  answers: {} as Record<string, "yes" | "no">,
   scales: {
     L: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     F: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     K: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S0: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S1: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S2: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S3: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S4: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S5: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S6: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S7: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S8: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
     S9: {
       yes: [],
       no: [],
-      X: null,
-      T: null,
+      X: 0,
+      T: 0,
     },
-  },
+  } as T_SCALES_OBJ,
   scaleWithRawPoints: {},
   // ! METHODS ---------------------------------------------------------
-  addAnswers({ value, name }) {
+  addAnswers({ value, name }: { value: string; name: string }) {
     if (!this.sex) {
       alert("Выберите свой пол");
       document
         .querySelectorAll(".form-check-input")
-        .forEach((i) => (i.checked = false));
+        .forEach((i) => ((i as HTMLInputElement).checked = false));
       return false;
     }
     Object.assign(this.answers, { [name]: value });
     console.log(this.answers);
     return true;
   },
-  changeCurrPage(target) {
+  changeCurrPage(target: HTMLElement) {
     switch (true) {
       case !!target.closest("#next"):
         if (this.answers[this.page]) this.page++;
@@ -153,7 +163,7 @@ const state = {
     this.$prevBtn.disabled = this.page > 1 ? false : true;
     this.$nextBtn.disabled = this.page >= this.questions.length ? true : false;
   },
-  getPaginatedData: (data, limit, page) => {
+  getPaginatedData: <T>(data: T[], limit: number, page: number): T[] => {
     const sliced = limit * (page - 1);
     return data.slice(sliced, sliced + limit);
   },
@@ -166,22 +176,22 @@ const state = {
     this.$prevBtn.disabled = true;
     this.$nextBtn.disabled = false;
     for (const key in this.scales) {
-      this.scales[key] = {
+      this.scales[key as T_SCALES_NAMES] = {
         yes: [],
         no: [],
-        X: null,
-        T: null,
+        X: 0,
+        T: 0,
       };
     }
     this.answers = {};
-    this.sex = null;
+    this.sex = "";
     this.client = null;
-    this.$finishBtn.classList.remove("visible");
+    (this.$finishBtn as HTMLButtonElement).classList.remove("visible");
     [this.$finishBtn, this.$clientBtn].forEach((btn) => (btn.disabled = false));
     [this.$tableBtn, this.$chartBtn].forEach((btn) => (btn.disabled = true));
     [this.$sex, this.$chartType].forEach((select) => (select.value = ""));
     this.showStartProgress();
-    this.subscribers.forEach((cb) =>
+    this.subscribers.forEach((cb: Function) =>
       cb(this.getPaginatedData(this.questions, this.limit, this.page))
     );
     new ClientForm({ el: this.$modal, list: clientFormElems, state: this });
@@ -192,7 +202,7 @@ const state = {
     this.correctRawPoints();
   },
   correctRawPoints() {
-    Object.keys(this.scales).map((scale) => {
+    (Object.keys(this.scales) as T_SCALES_NAMES[]).map((scale) => {
       const { yes, no } = this.scales[scale];
       this.scales[scale].X = yes.length + no.length;
     });
@@ -208,12 +218,13 @@ const state = {
     this.calcTPoints();
   },
   calcTPoints() {
-    for (const scale in this.scales) {
+    (Object.keys(this.scales) as T_SCALES_NAMES[]).forEach((scale) => {
       const X = this.scales[scale].X;
-      const S = MMPI_INDEXIS[scale][this.sex].S;
-      const M = MMPI_INDEXIS[scale][this.sex].M;
+      const S = MMPI_INDEXIS[scale][this.sex as "woman" | "man"].S;
+      const M = MMPI_INDEXIS[scale][this.sex as "woman" | "man"].M;
       this.scales[scale].T = convertToTPoints(X, S, M);
-    }
+    });
+
     console.log(this.scales);
   },
   showStartProgress() {
@@ -258,12 +269,12 @@ const state = {
     return this;
   },
   addListenerToModal() {
-    this.$modal.onclick = () => {
+    (this.$modal as HTMLElement).onclick = () => {
       toggler(this.$modal, "visible");
     };
   },
   // !SUBSCRIBER --------------------------------------------------------------
-  observer(cb) {
+  observer(cb: (i: any[]) => void) {
     this.subscribers.push(cb);
   },
 };
@@ -283,5 +294,7 @@ state
 
 // рендерим форму в модальное окно с динамическим контентом при первом запуске:
 new ClientForm({ el: state.$modal, list: clientFormElems, state });
+
+export type T_State = typeof state;
 
 export { state };

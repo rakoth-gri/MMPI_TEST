@@ -1,9 +1,15 @@
 import { fillInScale } from "./utils.js";
+// типы
+import { T_SCALES_OBJ } from "../types/types";
 
 const yes = "yes";
 const no = "no";
 
-const addRawPointsToScales = (answers, scales, sex) => {
+const addRawPointsToScales = (
+  answers: Record<string, "yes" | "no">,
+  scales: T_SCALES_OBJ,
+  sex: string
+) => {
   const { L, F, K, S1, S2, S3, S4, S5, S6, S7, S8, S9, S0 } = scales;
 
   for (const id in answers) {

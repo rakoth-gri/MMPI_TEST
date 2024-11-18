@@ -1,10 +1,17 @@
-function drawResultChart(container, scales, chartType) {
+import { T_SCALES_NAMES, T_SCALES_OBJ } from "../types/types";
+
+function drawResultChart(
+  container: HTMLDivElement,
+  scales: T_SCALES_OBJ,
+  chartType: string
+) {
   container.innerHTML = `<canvas id="chart"></canvas>
 `;
   const ctx = document.querySelector("#chart");
 
-  const data = Object.keys(scales);
-  
+  const data = Object.keys(scales) as T_SCALES_NAMES[];
+
+  // @ts-ignore
   new Chart(ctx, {
     type: chartType || "line",
     data: {
@@ -36,7 +43,7 @@ function drawResultChart(container, scales, chartType) {
           titleColor: "whitesmoke",
           titleFont: { weight: "normal", family: "Roboto", size: 14 },
           bodyColor: "whitesmoke",
-          bodyFont: { weight: "normal", family: "Roboto", size: 12 }
+          bodyFont: { weight: "normal", family: "Roboto", size: 12 },
         },
       },
       layout: {

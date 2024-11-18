@@ -1,4 +1,11 @@
-function drawResultTable(container, scales, sex, client) {
+import { T_SCALES_NAMES, I_Client, T_SCALES_OBJ } from "../types/types";
+
+function drawResultTable(
+  container: HTMLDivElement,
+  scales: T_SCALES_OBJ,
+  sex: string,
+  client: null | I_Client
+) {
   const table = `
             <p class='h4 text-uppercase m-3 text-center'> ${
               sex === "woman" ? "женщина" : "мужчина"
@@ -27,7 +34,7 @@ function drawResultTable(container, scales, sex, client) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${Object.keys(scales)
+                    ${(Object.keys(scales) as T_SCALES_NAMES[])
                       .map(
                         (key) => `
                             <tr class="">
