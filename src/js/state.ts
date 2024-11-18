@@ -8,11 +8,7 @@ import { MMPI_INDEXIS } from "./mmpi_indexes.js";
 // класс
 import ClientForm from "./ClientForm.js";
 // типы
-import {
-  T_SCALES_NAMES,
-  T_SCALES_VAL,  
-  T_SCALES_OBJ
-} from "../types/types.js";
+import { T_SCALES_NAMES, T_SCALES_VAL, T_SCALES_OBJ } from "../types/types.js";
 
 const state = {
   // ! DOM_ELEMENTS -------------------------------------------
@@ -44,8 +40,8 @@ const state = {
   limit: 1,
   page: 1,
   subscribers: [] as Array<Function>,
-  client: null,
-  answers: {} as Record<string, "yes" | "no">,
+  client: {},
+  answers: {} as Record<string, string>,
   scales: {
     L: {
       yes: [],
@@ -136,7 +132,7 @@ const state = {
         .forEach((i) => ((i as HTMLInputElement).checked = false));
       return false;
     }
-    Object.assign(this.answers, { [name]: value });
+    this.answers[name] = value;
     console.log(this.answers);
     return true;
   },
@@ -185,7 +181,7 @@ const state = {
     }
     this.answers = {};
     this.sex = "";
-    this.client = null;
+    this.client = {};
     (this.$finishBtn as HTMLButtonElement).classList.remove("visible");
     [this.$finishBtn, this.$clientBtn].forEach((btn) => (btn.disabled = false));
     [this.$tableBtn, this.$chartBtn].forEach((btn) => (btn.disabled = true));
@@ -194,7 +190,11 @@ const state = {
     this.subscribers.forEach((cb: Function) =>
       cb(this.getPaginatedData(this.questions, this.limit, this.page))
     );
-    new ClientForm({ el: this.$modal, list: clientFormElems, state: this });
+    new ClientForm({
+      container: this.$modal,
+      list: clientFormElems,
+      state: this,
+    });
     console.log(this);
   },
   calcRawPoints() {
@@ -263,7 +263,11 @@ const state = {
   },
   addListenerToclientBtn() {
     this.$clientBtn.onclick = () => {
-      new ClientForm({ el: this.$modal, list: clientFormElems, state: this });
+      new ClientForm({
+        container: this.$modal,
+        list: clientFormElems,
+        state: this,
+      });
       toggler(this.$modal, "visible");
     };
     return this;
@@ -293,7 +297,7 @@ state
   .addListenerToModal();
 
 // рендерим форму в модальное окно с динамическим контентом при первом запуске:
-new ClientForm({ el: state.$modal, list: clientFormElems, state });
+new ClientForm({ container: state.$modal, list: clientFormElems, state });
 
 export type T_State = typeof state;
 

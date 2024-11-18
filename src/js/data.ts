@@ -1,3 +1,5 @@
+import { T_CLIENT_FORM_ELEM } from "../types/types";
+
 const questions = [
   {
     id: "1",
@@ -1533,7 +1535,7 @@ const questions = [
   // },
 ];
 
-const clientFormElems = [
+const clientFormElems: T_CLIENT_FORM_ELEM[] = [
   {
     type: 'text',
     placeholder: 'Имя:',

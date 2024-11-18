@@ -2,7 +2,10 @@
 import { T_State } from "./state";
 import { T_SCALES_VAL } from "../types/types";
 
-const markActiveElement = (elems: HTMLElement[], elem: HTMLElement) => {
+const markActiveElement = (
+  elems: NodeListOf<HTMLLabelElement>,
+  elem: HTMLElement
+) => {
   elems.forEach((l) => l.classList.remove("active"));
   (elem.parentElement as HTMLElement).classList.add("active");
 };

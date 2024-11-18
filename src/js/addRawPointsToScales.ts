@@ -6,7 +6,7 @@ const yes = "yes";
 const no = "no";
 
 const addRawPointsToScales = (
-  answers: Record<string, "yes" | "no">,
+  answers: Record<string, string>,
   scales: T_SCALES_OBJ,
   sex: string
 ) => {

@@ -3,10 +3,9 @@ export type UNIVER_OBJECT<O> = { [Key in keyof O]: O[Key] };
 
 export type UNIVER_OBJECT_KEYS<OBJ> = keyof OBJ;
 
-
 // SCALES OBJECT
 
-export type T_SCALES_OBJ= Record<T_SCALES_NAMES, T_SCALES_VAL>
+export type T_SCALES_OBJ = Record<T_SCALES_NAMES, T_SCALES_VAL>;
 
 // SCALES NAMES
 
@@ -47,11 +46,21 @@ export type MMPI_INDEXES_VAL = {
   };
 };
 
-// Объект клиента
+// Объект клиента ----
 
 export interface I_Client {
-    name: string,
-    surname: string,
-    birthDate: string,
-    email: string
+  name: string;
+  surname: string;
+  birthDate: string;
+  email: string;
 }
+
+// CLIENT_FORM_ELEMS ---------
+
+export type T_CLIENT_FORM_ELEM = {
+  type: string;
+  placeholder: string | null;
+  label: string;
+  ariaLabel: string;
+  name: string;
+};

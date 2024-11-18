@@ -4,14 +4,14 @@ function drawResultTable(
   container: HTMLDivElement,
   scales: T_SCALES_OBJ,
   sex: string,
-  client: null | I_Client
+  client: Partial<I_Client>
 ) {
   const table = `
             <p class='h4 text-uppercase m-3 text-center'> ${
               sex === "woman" ? "женщина" : "мужчина"
             } </p>
             ${
-              client
+              Object.keys(client).length
                 ? `<ul class="list-group">
                   <li class="list-group-item active" aria-current="true">Клиент: </li>
                   <li class="list-group-item"> <strong> имя: </strong> ${client.name} </li>

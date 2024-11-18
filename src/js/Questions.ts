@@ -1,14 +1,20 @@
 import { markActiveElement, getCurrProgress, toggler } from "./utils.js";
+// types
+import { T_State } from "./state";
 
 class Questions {
-  constructor({ sel, state }) {
-    this.$container = document.querySelector(`.${sel}`);
+  $container: HTMLDivElement;
+  state: T_State;
+  $labels: null | NodeListOf<HTMLLabelElement>;
+
+  constructor({ sel, state }: { sel: string; state: T_State }) {
+    this.$container = document.querySelector(`.${sel}`) as HTMLDivElement;
     this.$labels = null;
     this.state = state;
     this.builder(this.state);
   }
 
-  builder(state) {
+  builder(state: T_State) {
     state.observer(this.render.bind(this));
     this.render(
       state.getPaginatedData(state.questions, state.limit, state.page)
@@ -17,7 +23,7 @@ class Questions {
     this.addEventListenerToFinish();
   }
 
-  render(data) {
+  render<T extends { id: string; q: string }>(data: T[]) {
     const html = data
       .map(
         ({ q, id }) => `
@@ -68,13 +74,15 @@ class Questions {
     }
   }
 
-  changeHandler = (e) => {
+  changeHandler = (e: Event) => {
+    if (!(e.target instanceof HTMLInputElement)) return;
+
     if (!e.target.classList.contains("form-check-input")) return;
 
     const { name, value } = e.target;
 
     if (this.state.addAnswers({ name, value })) {
-      markActiveElement(this.$labels, e.target);
+      markActiveElement(this.$labels as NodeListOf<HTMLLabelElement>, e.target);
       this.state.$progress.value = getCurrProgress(this.state);
     }
   };
@@ -83,22 +91,22 @@ class Questions {
     this.$container.addEventListener("change", this.changeHandler);
   }
 
-  finishHandler = (e) => {
+  finishHandler = (e: MouseEvent) => {
     if (!this.state.questions.every(({ id }) => this.state.answers[id])) {
       alert("Вы ответили не на все вопросы!!");
       return;
     }
-    this.state.calcRawPoints();   
+    this.state.calcRawPoints();
     [this.state.$finishBtn, this.state.$clientBtn].forEach(
       (btn) => (btn.disabled = true)
     );
     [this.state.$alert, this.state.$spinner].forEach((el) =>
-      toggler(el, "visible")
+      toggler(el as HTMLElement, "visible")
     );
 
     setTimeout(() => {
       [this.state.$alert, this.state.$spinner].forEach((el) =>
-        toggler(el, "visible")
+        toggler(el as HTMLElement, "visible")
       );
       [this.state.$tableBtn, this.state.$chartBtn].forEach(
         (btn) => (btn.disabled = false)
