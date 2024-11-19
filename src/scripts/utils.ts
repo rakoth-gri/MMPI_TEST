@@ -1,5 +1,5 @@
 // типы
-import { T_State } from "./state";
+import { T_STATE } from "./state";
 import { T_SCALES_VAL } from "../types/types";
 
 const markActiveElement = (
@@ -10,7 +10,7 @@ const markActiveElement = (
   (elem.parentElement as HTMLElement).classList.add("active");
 };
 
-const getCurrProgress = (state: T_State) =>
+const getCurrProgress = (state: T_STATE) =>
   (Object.keys(state.answers).length / state.questions.length) * 100;
 
 const fillInScale = (scale: T_SCALES_VAL, ans: "yes" | "no", num: number) =>
@@ -24,6 +24,10 @@ const convertToTPoints = (X: number, S: number, M: number) =>
 const getInitialFormData = <T extends { name: string }>(l: T[]) =>
   l.slice(0, -1).reduce((acc, { name }) => ({ ...acc, [name]: "" }), {});
 
+const mapper = <T, R>(l: T[], cb: (item: T, i?: number, arr?: T[]) => R) => {
+  return l.map(cb)
+} 
+
 export {
   markActiveElement,
   getCurrProgress,
@@ -31,4 +35,5 @@ export {
   toggler,
   convertToTPoints,
   getInitialFormData,
+  mapper,
 };

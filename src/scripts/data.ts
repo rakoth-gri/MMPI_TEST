@@ -1,4 +1,4 @@
-import { T_CLIENT_FORM_ELEM } from "../types/types";
+import { I_CLIENT_FORM_ITEM } from "../types/types";
 
 const questions = [
   {
@@ -1535,7 +1535,7 @@ const questions = [
   // },
 ];
 
-const clientFormElems: T_CLIENT_FORM_ELEM[] = [
+const clientFormElems: I_CLIENT_FORM_ITEM[] = [
   {
     type: 'text',
     placeholder: 'Имя:',

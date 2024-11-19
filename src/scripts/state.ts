@@ -8,7 +8,7 @@ import { MMPI_INDEXIS } from "./mmpi_indexes.js";
 // класс
 import ClientForm from "./ClientForm.js";
 // типы
-import { T_SCALES_NAMES, T_SCALES_VAL, T_SCALES_OBJ } from "../types/types.js";
+import { T_SCALES_NAMES, T_SCALES_OBJ } from "../types/types.js";
 
 const state = {
   // ! DOM_ELEMENTS -------------------------------------------
@@ -299,6 +299,6 @@ state
 // рендерим форму в модальное окно с динамическим контентом при первом запуске:
 new ClientForm({ container: state.$modal, list: clientFormElems, state });
 
-export type T_State = typeof state;
+export type T_STATE = typeof state;
 
 export { state };

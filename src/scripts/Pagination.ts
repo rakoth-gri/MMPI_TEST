@@ -1,11 +1,11 @@
-import { T_State } from "./state";
+import { T_STATE } from "./state";
 
 class Pagination {
 
   $container: HTMLDivElement;
-  state: T_State
+  state: T_STATE
 
-  constructor({ sel, state }: {sel: string, state: T_State}) {
+  constructor({ sel, state }: {sel: string, state: T_STATE}) {
     this.$container = document.querySelector(sel) as HTMLDivElement;    
     this.state = state;
     this.builder();

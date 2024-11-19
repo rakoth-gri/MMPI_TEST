@@ -1,20 +1,25 @@
-import { markActiveElement, getCurrProgress, toggler } from "./utils.js";
+import {
+  markActiveElement,
+  getCurrProgress,
+  toggler,
+  mapper,
+} from "./utils.js";
 // types
-import { T_State } from "./state.js";
+import { T_STATE } from "./state.js";
 
 class Questions {
   $container: HTMLDivElement;
-  state: T_State;
+  state: T_STATE;
   $labels: null | NodeListOf<HTMLLabelElement>;
 
-  constructor({ sel, state }: { sel: string; state: T_State }) {
+  constructor({ sel, state }: { sel: string; state: T_STATE }) {
     this.$container = document.querySelector(`.${sel}`) as HTMLDivElement;
     this.$labels = null;
     this.state = state;
     this.builder(this.state);
   }
 
-  builder(state: T_State) {
+  builder(state: T_STATE) {
     state.observer(this.render.bind(this));
     this.render(
       state.getPaginatedData(state.questions, state.limit, state.page)
@@ -24,47 +29,45 @@ class Questions {
   }
 
   render<T extends { id: string; q: string }>(data: T[]) {
-    const html = data
-      .map(
-        ({ q, id }) => `
-        <article class="question p-3">
-            <p class="h4 mb-4"> <span class='header-4'> ${id}. </span> ${q} </p>
-            <div class="form-check d-flex justify-content-start mb-2 rounded-end">                
-                <label class="form-check-label ${
-                  this.state.answers[id] === "yes" ? "active" : ""
-                }">
-                    <input
-                    class="form-check-input"
-                    type="radio"
-                    name="${id}"
-                    id="${id}"
-                    ${this.state.answers[id] === "yes" ? "checked" : ""}
-                    value="yes"              
-                    />
-                  ДА
-                </label>
-            </div>
-            <hr/>
-            <div class="form-check d-flex justify-content-start mb-2 rounded-end">                
-                <label class="form-check-label ${
-                  this.state.answers[id] === "no" ? "active" : ""
-                }">
-                
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="${id}"
-                    id="${id}"
-                    ${this.state.answers[id] === "no" ? "checked" : ""}
-                    value="no"
-                  />
-                  НЕТ
-                </label>
-            </div>
-        </article>
-        `
-      )
-      .join("");
+    const html = mapper(
+      data,
+      ({ q, id }) => `
+    <article class="question p-3">
+        <p class="h4 mb-4"> <span class='header-4'> ${id}. </span> ${q} </p>
+        <div class="form-check d-flex justify-content-start mb-2 rounded-end">                
+            <label class="form-check-label ${
+              this.state.answers[id] === "yes" ? "active" : ""
+            }">
+                <input
+                class="form-check-input"
+                type="radio"
+                name="${id}"
+                id="${id}"
+                ${this.state.answers[id] === "yes" ? "checked" : ""}
+                value="yes"              
+                />
+              ДА
+            </label>
+        </div>
+        <hr/>
+        <div class="form-check d-flex justify-content-start mb-2 rounded-end">                
+            <label class="form-check-label ${
+              this.state.answers[id] === "no" ? "active" : ""
+            }">
+            
+              <input
+                class="form-check-input"
+                type="radio"
+                name="${id}"
+                id="${id}"
+                ${this.state.answers[id] === "no" ? "checked" : ""}
+                value="no"
+              />
+              НЕТ
+            </label>
+        </div>
+    </article>
+    `).join("");   
 
     this.$container.innerHTML = html;
     this.$labels = document.querySelectorAll(".form-check-label");

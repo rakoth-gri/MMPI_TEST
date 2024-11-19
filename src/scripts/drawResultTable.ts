@@ -1,10 +1,11 @@
-import { T_SCALES_NAMES, I_Client, T_SCALES_OBJ } from "../types/types";
+import { mapper } from "./utils.js";
+import { T_SCALES_NAMES, I_CLIENT, T_SCALES_OBJ } from "../types/types";
 
 function drawResultTable(
   container: HTMLDivElement,
   scales: T_SCALES_OBJ,
   sex: string,
-  client: Partial<I_Client>
+  client: Partial<I_CLIENT>
 ) {
   const table = `
             <p class='h4 text-uppercase m-3 text-center'> ${
@@ -34,29 +35,25 @@ function drawResultTable(
                     </tr>
                 </thead>
                 <tbody>
-                    ${(Object.keys(scales) as T_SCALES_NAMES[])
-                      .map(
-                        (key) => `
-                            <tr class="">
-                                <td > ${key}</td>
-                                <td class='bg-success'> ${
-                                  scales[key]["yes"].length
-                                }</td>
-                                <td class='bg-danger'> ${
-                                  scales[key]["no"].length
-                                }</td>
-                                <td> ${scales[key].X}</td>
-                                <td> ${scales[key].T}</td>
-                                <td class='bg-success'> ${scales[key]["yes"]
-                                  .map((yes) => `№${yes}`)
-                                  .join(", ")}</td>
-                                <td class='bg-danger'> ${scales[key]["no"]
-                                  .map((no) => `№${no}`)
-                                  .join(", ")}</td>
-                            </tr>                            
-                            `
-                      )
-                      .join("")}
+                    ${mapper(Object.keys(scales) as T_SCALES_NAMES[], (key) => `
+                      <tr class="">
+                          <td > ${key}</td>
+                          <td class='bg-success'> ${
+                            scales[key]["yes"].length
+                          }</td>
+                          <td class='bg-danger'> ${
+                            scales[key]["no"].length
+                          }</td>
+                          <td> ${scales[key].X}</td>
+                          <td> ${scales[key].T}</td>
+                          <td class='bg-success'> ${scales[key]["yes"]
+                            .map((yes) => `№${yes}`)
+                            .join(", ")}</td>
+                          <td class='bg-danger'> ${scales[key]["no"]
+                            .map((no) => `№${no}`)
+                            .join(", ")}</td>
+                      </tr>                            
+                      `).join("")}
                 </tbody>
             </table>
         `;

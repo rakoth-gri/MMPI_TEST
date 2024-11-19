@@ -1,14 +1,14 @@
-import { toggler, getInitialFormData } from "./utils.js";
+import { toggler, getInitialFormData, mapper } from "./utils.js";
 // типы
-import { T_State } from "./state.js";
-import { T_CLIENT_FORM_ELEM, I_Client } from "../types/types.js";
+import { T_STATE } from "./state.js";
+import { I_CLIENT } from "../types/types.js";
 
-class ClientForm {
+class ClientForm<T extends {name: string}> {
   $container: HTMLDivElement;
   $form: null | HTMLFormElement;
-  list: T_CLIENT_FORM_ELEM[];
-  state: T_State;
-  formData: Partial<I_Client>;
+  list: T[];
+  state: T_STATE;
+  formData: Partial<I_CLIENT>;
   $formBody: null | HTMLDivElement;
 
   constructor({
@@ -16,51 +16,47 @@ class ClientForm {
     container,
     list,
   }: {
-    state: T_State;
+    state: T_STATE;
     container: HTMLDivElement;
-    list: T_CLIENT_FORM_ELEM[];
+    list: T[];
   }) {
     this.$container = container;
     this.$form = null;
     this.$formBody = null;
-    this.formData = getInitialFormData<T_CLIENT_FORM_ELEM>(list);
+    this.formData = getInitialFormData(list);
     this.list = list;
     this.state = state;
-    this.builder(this.$container, this.list);
-    console.log(this.state.client);
+    this.builder(this.$container, this.list);    
   }
 
-  builder(container: HTMLDivElement, list: T_CLIENT_FORM_ELEM[]) {
+  builder(container: HTMLDivElement, list: T[]) {
     this.render(container, list);
     (this.$form as HTMLFormElement).onclick = (e) => e.stopPropagation();
     this.addChangeListenerToFormBody();
     this.addSubmitListenerToForm();
   }
 
-  render(container: HTMLDivElement, list: T_CLIENT_FORM_ELEM[]) {
+  render(container: HTMLDivElement, list: T[]) {
     container.innerHTML = `
         <form action="" class="clientForm">
             <div class="clientForm-body">
-                ${list
-                  .map(
-                    ({ type, placeholder, name, ariaLabel, label }) => `
-                    <div class="input-group mb-3 position-relative">
-                    <span class="input-group-text bg-success" id="basic-addon1" style='${
-                      type === "submit" ? "display:none;" : "display:flex;"
-                    }'>${label}</span>
-                    <input
-                          type="${type}"
-                          class="clientForm-input"
-                          placeholder="${placeholder}"
-                          aria-label="${ariaLabel}"
-                          aria-describedby="basic-addon1"
-                          name="${name}"
-                        />                   
-                    </div>
-                       
-                    `
-                  )
-                  .join("")}                  
+                ${
+                  // @ts-ignore
+                  mapper(list, ({ type, placeholder, name, ariaLabel, label }) => `
+                  <div class="input-group mb-3 position-relative">
+                  <span class="input-group-text bg-success" id="basic-addon1" style='${
+                    type === "submit" ? "display:none;" : "display:flex;"
+                  }'>${label}</span>
+                  <input
+                        type="${type}"
+                        class="clientForm-input"
+                        placeholder="${placeholder}"
+                        aria-label="${ariaLabel}"
+                        aria-describedby="basic-addon1"
+                        name="${name}"
+                      />                   
+                  </div>                     
+                  `).join("")}                  
             </div>
     </form>
         `;
@@ -73,7 +69,7 @@ class ClientForm {
     if (!(e.target instanceof HTMLInputElement)) return;
 
     if (!e.target.matches(".clientForm-input")) return;
-    this.formData[e.target.name as keyof I_Client] = e.target.value;
+    this.formData[e.target.name as keyof I_CLIENT] = e.target.value;
   };
 
   addChangeListenerToFormBody() {
@@ -96,7 +92,7 @@ class ClientForm {
     setTimeout(() => {
       [this.state.$alert].forEach((el) => toggler(el, "visible"));
       (this.$form as HTMLFormElement).reset();
-      this.formData = getInitialFormData<T_CLIENT_FORM_ELEM>(this.list);
+      this.formData = getInitialFormData(this.list);
       console.log(this.state.client);
     }, 1400);
   };

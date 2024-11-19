@@ -1,3 +1,4 @@
+import { mapper } from "./utils.js";
 import { T_SCALES_NAMES, T_SCALES_OBJ } from "../types/types";
 
 function drawResultChart(
@@ -15,18 +16,18 @@ function drawResultChart(
   new Chart(ctx, {
     type: chartType || "line",
     data: {
-      labels: data.map((key) => `шкала-${key}`),
+      labels: mapper(data, (key) => `шкала-${key}`),
       datasets: [
         {
           label: "X-балл",
-          data: data.map((key) => scales[key].X),
+          data: mapper(data, (key) => scales[key].X),
           borderWidth: 2,
           fill: false,
           borderColor: "#198754",
         },
         {
           label: "T-балл",
-          data: data.map((key) => scales[key].T),
+          data: mapper(data, (key) => scales[key].T),
           borderWidth: 2,
           fill: false,
           borderColor: "#dc3545",
