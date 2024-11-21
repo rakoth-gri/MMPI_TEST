@@ -42,86 +42,24 @@ const state = {
   subscribers: [] as Array<Function>,
   client: {},
   answers: {} as Record<string, string>,
-  scales: {
-    L: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    F: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    K: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S0: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S1: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S2: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S3: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S4: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S5: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S6: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S7: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S8: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-    S9: {
-      yes: [],
-      no: [],
-      X: 0,
-      T: 0,
-    },
-  } as T_SCALES_OBJ,
+  scales: [
+    "L",
+    "F",
+    "K",
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+  ].reduce(
+    (a, s) => ({ ...a, [s]: { yes: [], no: [], X: 0, T: 0 } }),
+    {}
+  ) as T_SCALES_OBJ,
   scaleWithRawPoints: {},
   // ! METHODS ---------------------------------------------------------
   addAnswers({ value, name }: { value: string; name: string }) {
@@ -182,7 +120,7 @@ const state = {
     this.answers = {};
     this.sex = "";
     this.client = {};
-    (this.$finishBtn as HTMLButtonElement).classList.remove("visible");
+    this.$finishBtn.classList.remove("visible");
     [this.$finishBtn, this.$clientBtn].forEach((btn) => (btn.disabled = false));
     [this.$tableBtn, this.$chartBtn].forEach((btn) => (btn.disabled = true));
     [this.$sex, this.$chartType].forEach((select) => (select.value = ""));
