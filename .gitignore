@@ -2,7 +2,10 @@
 
 /src/build/
 
-/bootstrap.css
-/bootstrap-icons.css
-/smil.doc
-/fonts.zip
+/dist/
+
+bootstrap.css
+bootstrap-icons.css
+smil.doc
+fonts.zip
+package-lock.json

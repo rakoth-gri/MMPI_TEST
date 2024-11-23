@@ -1,4 +1,4 @@
-import { mapper } from "./utils.js";
+import { mapper } from "./utils";
 import { T_SCALES_NAMES, I_CLIENT, T_SCALES_OBJ } from "../types/types";
 
 function drawResultTable(

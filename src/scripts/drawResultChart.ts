@@ -1,5 +1,7 @@
-import { mapper } from "./utils.js";
+import Chart from 'chart.js/auto'
+import { mapper } from "./utils";
 import { T_SCALES_NAMES, T_SCALES_OBJ } from "../types/types";
+
 
 function drawResultChart(
   container: HTMLDivElement,

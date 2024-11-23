@@ -1,14 +1,14 @@
-import { questions, clientFormElems } from "./data.js";
-import { addRawPointsToScales } from "./addRawPointsToScales.js";
-import { drawResultTable } from "./drawResultTable.js";
-import { drawResultChart } from "./drawResultChart.js";
-import { drawAlertWindow } from "./drawAlertWindow.js";
-import { toggler, convertToTPoints } from "./utils.js";
-import { MMPI_INDEXIS } from "./mmpi_indexes.js";
+import { questions, clientFormElems } from "./data";
+import { addRawPointsToScales } from "./addRawPointsToScales";
+import { drawResultTable } from "./drawResultTable";
+import { drawResultChart } from "./drawResultChart";
+import { drawAlertWindow } from "./drawAlertWindow";
+import { toggler, convertToTPoints } from "./utils";
+import { MMPI_INDEXIS } from "./mmpi_indexes";
 // класс
-import ClientForm from "./ClientForm.js";
+import ClientForm from "./ClientForm";
 // типы
-import { T_SCALES_NAMES, T_SCALES_OBJ } from "../types/types.js";
+import { T_SCALES_NAMES, T_SCALES_OBJ } from "../types/types";
 
 const state = {
   // ! DOM_ELEMENTS -------------------------------------------

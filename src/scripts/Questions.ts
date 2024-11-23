@@ -3,9 +3,9 @@ import {
   getCurrProgress,
   toggler,
   mapper,
-} from "./utils.js";
+} from "./utils";
 // types
-import { T_STATE } from "./state.js";
+import { T_STATE } from "./state";
 
 class Questions {
   $container: HTMLDivElement;

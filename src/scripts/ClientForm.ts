@@ -1,4 +1,4 @@
-import { toggler, getInitialFormData, mapper } from "./utils.js";
+import { toggler, getInitialFormData, mapper } from "./utils";
 // типы
 import { T_STATE } from "./state.js";
 import { I_CLIENT } from "../types/types.js";
